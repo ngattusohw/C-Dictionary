@@ -34,12 +34,14 @@ int hasKey(SIdict d, char* key) {
         curr = curr->next;
         ++index;
     }
+
     return 0;
 }
 
 int addOrUpdate(SIdict d, char* key, int val) {
     int i, index;
     nodePtr node = d->head;
+    //if it has, update
     if((index = hasKey(d, key))) {
         for(i=1; i < index && node != NULL; ++i)
             node = node->next;
@@ -47,10 +49,12 @@ int addOrUpdate(SIdict d, char* key, int val) {
         //free mem
         return 1;
     }
+    //if it doesnt, make a new node
     nodePtr temp = (nodePtr) malloc(sizeof(struct node));
     temp->key = key;
     temp->val = val;
 
+    //if the list dict is initally empty
     if(d->head == NULL) {
         node = NULL;
     }
@@ -64,6 +68,7 @@ int addOrUpdate(SIdict d, char* key, int val) {
     return 0;
 }
 
+/* A function to print out the whole dictionary */
 void print(SIdict d) {
     nodePtr curr = d->head;
 
@@ -73,10 +78,50 @@ void print(SIdict d) {
     }
 }
 
+int lookup(SIdict d, char* key){
+    nodePtr curr = d->head;
+    while(curr != NULL){
+        if(strcmp(key, curr->key) == 0){
+            return curr->val;
+        }
+        curr = curr->next;
+    }
+
+    return -1;
+}
+
+int remKey(SIdict d, char* key){
+    nodePtr curr = d->head;
+    nodePtr hold;
+
+    while(curr != NULL){
+        if(strcmp(key, curr->key) == 0){
+            //remove the node from the linked list
+            hold->next = curr->next;
+            curr->next = NULL;
+            //curr->val = NULL;
+            curr->key = NULL;
+            return 1;
+        }
+
+        hold = curr;
+        curr = curr->next;
+        
+    }
+
+    return 0;
+}
+
 int main() {
     SIdict dict = makeSIdict();
     addOrUpdate(dict, "lmao", 2);
     addOrUpdate(dict, "blah", 300);
-    addOrUpdate(dict, "lmao", 20);
+    addOrUpdate(dict, "penis", 20);
+    print(dict);
+    printf("%i\n" , lookup(dict, "lmao"));
+    printf("%i\n" , lookup(dict, "penis"));
+    printf("%i\n" , lookup(dict, "ass"));
+
+    printf("%i\n" , remKey(dict, "lmao"));
     print(dict);
 }
