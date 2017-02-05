@@ -115,12 +115,11 @@ int remKey(SIdict d, char* key){
 int main() {
     SIdict dict = makeSIdict();
     addOrUpdate(dict, "lmao", 2);
-    addOrUpdate(dict, "blah", 300);
-    addOrUpdate(dict, "penis", 20);
+    
     print(dict);
     printf("%i\n" , lookup(dict, "lmao"));
     printf("%i\n" , lookup(dict, "penis"));
-    printf("%i\n" , lookup(dict, "ass"));
+    //printf("%i\n" , lookup(dict, "ass"));
 
     printf("%i\n" , remKey(dict, "lmao"));
     print(dict);
