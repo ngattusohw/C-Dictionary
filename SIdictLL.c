@@ -1,3 +1,8 @@
+/*
+    I pledge my honor that I have abided by the stevens honor system
+    Nick Gattuso
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -68,16 +73,6 @@ int addOrUpdate(SIdict d, char* key, int val) {
     return 0;
 }
 
-/* A function to print out the whole dictionary */
-void print(SIdict d) {
-    nodePtr curr = d->head;
-
-    while(curr != NULL) {
-        printf("%s\t%d\n", curr->key, curr->val);
-        curr = curr->next;
-    }
-}
-
 int lookup(SIdict d, char* key){
     nodePtr curr = d->head;
     while(curr != NULL){
@@ -97,7 +92,6 @@ int remKey(SIdict d, char* key){
     if(hasKey(d,key)==0){
         return 0;
     }
-
     if(strcmp(key, d->head->key) == 0){
         rem = d->head;
         d->head = rem->next;
@@ -106,7 +100,8 @@ int remKey(SIdict d, char* key){
             if(strcmp(key, prev->next->key) == 0){
                 //remove the node from the linked list
                 rem = prev->next;
-                prev->next = rem->next;   
+                prev->next = rem->next;
+                break;   
             }else{
                 prev = prev->next;
             }
