@@ -91,36 +91,31 @@ int lookup(SIdict d, char* key){
 }
 
 int remKey(SIdict d, char* key){
-    nodePtr curr = d->head;
-    nodePtr hold;
+    nodePtr prev = d->head;
+    nodePtr rem;
 
-    while(curr != NULL){
-        if(strcmp(key, curr->key) == 0){
-            //remove the node from the linked list
-            hold->next = curr->next;
-            curr->next = NULL;
-            //curr->val = NULL;
-            curr->key = NULL;
-            return 1;
-        }
-
-        hold = curr;
-        curr = curr->next;
-        
+    if(hasKey(d,key)==0){
+        return 0;
     }
 
-    return 0;
+    if(strcmp(key, d->head->key) == 0){
+        rem = d->head;
+        d->head = rem->next;
+    }else{
+        while(prev != NULL){
+            if(strcmp(key, prev->next->key) == 0){
+                //remove the node from the linked list
+                rem = prev->next;
+                prev->next = rem->next;   
+            }else{
+                prev = prev->next;
+            }
+        }
+    }
+
+    rem->next = NULL;
+    rem->val = 0;
+    free(rem);
+    return 1;
 }
 
-int main() {
-    SIdict dict = makeSIdict();
-    addOrUpdate(dict, "lmao", 2);
-    
-    print(dict);
-    printf("%i\n" , lookup(dict, "lmao"));
-    printf("%i\n" , lookup(dict, "penis"));
-    //printf("%i\n" , lookup(dict, "ass"));
-
-    printf("%i\n" , remKey(dict, "lmao"));
-    print(dict);
-}
